@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)" >
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:replace="${title}">博客详情</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+
+  <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+  <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+</head>
+<body>
+
+
+<!--导航-->
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" style="background: dodgerblue">
+
+  <div class="ui container">
+    <div class="ui inverted secondary stackable menu">
+      <h2 class="ui orange header item">管理后台</h2>
+      <a href=""  th:href="@{/admin/blogs}" class=" m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i>博客</a>
+      <a href=""  th:href="@{/admin/types}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i>分类</a>
+      <a href=""  th:href="@{/admin/tags}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>标签</a>
+      <a href=""  th:href="@{/admin/about}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="mini info icon"></i>关于我</a>
+
+      <div class="right menu m-item m-mobile-hide ">
+        <div class="ui dropdown item">
+          <div class="text">
+            <img src="https://unsplash.it/100/100?image=1005"  th:src="${session.user.avatar}" alt="" class="ui avatar image">
+            <span th:text="${session.user.nickname}">Zhaohaihang</span>
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <a href="#" class="ui menu toggle black button icon m-right-top m-mobile-show ">
+    <i class="sidebar icon"></i>
+  </a>
+
+</nav>
+
+
+
+<!--底部footer-->
+<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive" style="background: dodgerblue">
+  <div class="ui center aligned container">
+    <div class="ui inverted divided stackable grid">
+
+      <div class="three wide column">
+        <div class="ui inverted link list">
+          <div class="item">
+            <img src="../../static/images/weichat.jpg" th:src="@{/images/weichat.jpg}"  alt="" class="ui rounded image"
+                 style="height: 110px;width: 110px">
+          </div>
+        </div>
+      </div>
+
+      <div class="five wide column">
+        <h4 class="ui inverted header  m-text-spaced m-opacity-mini">最新博客</h4>
+        <div id="newblog-container">
+          <div class="ui inverted link list" th:fragment="newblogList" >
+            <a href="#"  class="item" target="_blank" th:each="blog:${newblogs}" th:text="${blog.title}">文章一</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="five wide column">
+        <h4 class="ui inverted header  m-text-spaced m-opacity-mini">联系我</h4>
+        <div id="callme-container">
+          <div class="ui inverted link list" th:fragment="callmeList" th:each="c:${callme}">
+            <a href="#" class="item"  >E-mail：<span th:text="${c.email}">1932859223@qq.com </span></a>
+            <a href="#" class="item"  >QQ：<span th:text="${c.tele}">1932859223 </span></a>
+            <a href="#" class="item"  >Tele：<span th:text="${c.QQ}">13179728614 </span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="three wide column">
+        <h4 class="ui inverted header  m-text-spaced m-opacity-mini">座右铭</h4>
+        <p class="m-text-thin m-text-spaced m-opacity-mini">生命不息，Coding不止</p>
+      </div>
+
+    </div>
+
+    <!--版本-->
+    <div class="ui inverted section divider"></div>
+    <p class="m-text-thin m-text-spaced m-opacity-tiny"> Designed by Zhaohaihang</p>
+  </div>
+
+</footer>
+
+<th:block th:fragment="script">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+  <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+  <script>
+    $('#newblog-container').load(/*[[@{/admin/footer/newblog}]]*/"/admin/footer/newblog");
+    $('#callme-container').load(/*[[@{/admin/footer/callme}]]*/"/admin/footer/callme");
+  </script>
+</th:block>
+
+</body>
+</html>
